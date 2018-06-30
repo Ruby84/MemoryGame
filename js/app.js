@@ -13,12 +13,24 @@ var list = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt',
 function initCard(icon) {
     $('#main').append('<li class="card animated"> <i class="fa '+icon+'"> </i></li>');
 }
-
+/* to count number of moves */
+counter = 0;
+/* matched variable is used to count the number of matched card */
+matched = 0;
+// timer Object
+var timer = new Timer();
+timer.start();
+timer.addEventListener('secondsUpdated', function (e) {
+    $('#basicUsage').html(timer.getTimeValues().toString());
+});
 function initGame() { 
+    $('.stars').append('<li><i class="fa fa-star"></i></li>');
+    $('.stars').append('<li><i class="fa fa-star"></i></li>');
+    $('.stars').append('<li><i class="fa fa-star"></i></li>');
     for(var i=0; i<2; i++) {
         list = shuffle(list);
         list.forEach(initCard); 
-}
+    }
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -41,21 +53,21 @@ function showHide() {
     if (openCardArray.length === 0) {
         $(this).toggleClass("show open");
         openCardArray.push($(this));
+        disadled();
     } else if (openCardArray.length === 1 ) {
+        counter = counter + 1;
+        $(".moves").html(`${counter}`);
+        if (counter === 24) {
+           $(".stars").children()[0].remove();
+           $('.stars').append('<li><i class="fa fa-star-o"></i></li>');
+        }
+        if (counter === 16) {
+            $(".stars").children()[0].remove();
+            $('.stars').append('<li><i class="fa fa-star-o"></i></li>');
+         }
         $(this).toggleClass("show open");
         openCardArray.push($(this));
-        //this fucntion so it  wait before removing the class
-        function sleep(milliseconds) {
-            var start = new Date().getTime();
-            for (var i = 0; i < 1e7; i++) {
-              if ((new Date().getTime() - start) > milliseconds){
-                break;
-              }
-            }
-              alert("woke up!");
-              checkOpenCards();
-          }
-          sleep(5000);
+      setTimeout(checkOpenCards,1100);
     
     }
 }
@@ -64,11 +76,20 @@ function checkOpenCards() {
 if(openCardArray[0][0].firstElementChild.className == openCardArray[1][0].firstElementChild.className) {
     openCardArray[0].addClass("match");
     openCardArray[1].addClass("match");
+    matched = matched + 1;
+    if (matched === 8){
+        timer.pause();
+        var results = confirm("Congradulation you win the game!" + timer.getTimeValues().toString()+ "\n Do you want to play the game again?");
+        if (results == true) { 
+            location.reload();
+        }
+    }
+    disadled();
+    emptyOpenCardArray();
 } else {
-   /* _.delay(function(msg){},5000,'hello'); */
-
     openCardArray[0].toggleClass("show open");
     openCardArray[1].toggleClass("show open");
+    unabled();
     emptyOpenCardArray();
     }
 }
@@ -77,8 +98,20 @@ function emptyOpenCardArray() {
  openCardArray = [];
 }
 
+function disadled() {
+    openCardArray.forEach(function (box) {
+    box.off("click");
+    });
+}
+function unabled() {
+    openCardArray[0].click(showHide);
+}
+
 initGame();
 $(".card").click(showHide);
+$(".fa-repeat").click(function() {
+location.reload();
+});
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
