@@ -13,16 +13,22 @@ var list = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt',
 function initCard(icon) {
     $('#main').append('<li class="card animated"> <i class="fa '+icon+'"> </i></li>');
 }
-/* to count number of moves */
+
+//to count number of moves 
 counter = 0;
-/* matched variable is used to count the number of matched card */
+// matched variable is used to count the number of matched card 
 matched = 0;
 // timer Object
-var timer = new Timer();
+const timer = new Timer();
 timer.start();
 timer.addEventListener('secondsUpdated', function (e) {
     $('#basicUsage').html(timer.getTimeValues().toString());
 });
+
+/*
+* @description this method will initialize the game by
+* creating stars and the cards
+*/
 function initGame() { 
     $('.stars').append('<li><i class="fa fa-star"></i></li>');
     $('.stars').append('<li><i class="fa fa-star"></i></li>');
@@ -48,7 +54,12 @@ function shuffle(array) {
     return array;
 }
 
+// openCardArray will contain all the open cards
 openCardArray=[]
+/*
+* @description to toggle the cards as well as increase the move counter 
+* and on the basis of move counts change the number of stars 
+*/
 function showHide() {
     if (openCardArray.length === 0) {
         $(this).toggleClass("show open");
@@ -64,20 +75,26 @@ function showHide() {
         if (counter === 16) {
             $(".stars").children()[0].remove();
             $('.stars').append('<li><i class="fa fa-star-o"></i></li>');
-         }
+        }
         $(this).toggleClass("show open");
         openCardArray.push($(this));
-      setTimeout(checkOpenCards,1100);
+      setTimeout(checkOpenCards,1000);
     
     }
 }
 
+/*
+*@description cheOpenCards will find pairs of matched cardand increase the counting till 
+*8th matched for all 16 cards and then pause the timer and popups the results message
+*also player can reset the page to replay the game
+*/
 function checkOpenCards() {
-if(openCardArray[0][0].firstElementChild.className == openCardArray[1][0].firstElementChild.className) {
+if(openCardArray[0][0].firstElementChild.className == 
+    openCardArray[1][0].firstElementChild.className) {
     openCardArray[0].addClass("match");
     openCardArray[1].addClass("match");
     matched = matched + 1;
-    if (matched === 8){
+    if (matched === 8) {
         timer.pause();
         var results = confirm("Congradulation you win the game!" + timer.getTimeValues().toString()+ "\n Do you want to play the game again?");
         if (results == true) { 
@@ -94,24 +111,32 @@ if(openCardArray[0][0].firstElementChild.className == openCardArray[1][0].firstE
     }
 }
 
+//emptyOpenCardArray method will empty the card array 
 function emptyOpenCardArray() {
  openCardArray = [];
 }
 
+ // disabled method will disable click on the open card
 function disadled() {
     openCardArray.forEach(function (box) {
     box.off("click");
     });
 }
+
+//this method will unable clicking on the particular card
 function unabled() {
     openCardArray[0].click(showHide);
 }
 
+//starting the game
 initGame();
 $(".card").click(showHide);
+
+//this mehod will reset the game
 $(".fa-repeat").click(function() {
 location.reload();
 });
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
