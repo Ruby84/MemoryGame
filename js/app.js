@@ -25,6 +25,22 @@ timer.addEventListener('secondsUpdated', function (e) {
     $('#basicUsage').html(timer.getTimeValues().toString());
 });
 
+function afterWinning() { 
+    if( counter < 16 ) { 
+         $('#content').append('<i class="fa fa-star"></i>');
+         $('#content').append('<i class="fa fa-star"></i>');
+         $('#content').append('<i class="fa fa-star"></i>');
+    } else if (counter <24) {
+        $('#content').append('<i class="fa fa-star"></i>');
+         $('#content').append('<i class="fa fa-star"></i>');
+    } else {
+        $('#content').append('<i class="fa fa-star"></i>');
+    }
+    $("#totalTime").append(timer.getTimeValues().toString());
+    $("#totalMoves").append(counter);
+    $('#myModal').modal('show');
+};
+
 /*
 * @description this method will initialize the game by
 * creating stars and the cards
@@ -62,7 +78,7 @@ openCardArray=[]
 */
 function showHide() {
     if (openCardArray.length === 0) {
-        $(this).toggleClass("show open");
+        $(this).toggleClass("show1 open");
         openCardArray.push($(this));
         disadled();
     } else if (openCardArray.length === 1 ) {
@@ -76,7 +92,7 @@ function showHide() {
             $(".stars").children()[0].remove();
             $('.stars').append('<li><i class="fa fa-star-o"></i></li>');
         }
-        $(this).toggleClass("show open");
+        $(this).toggleClass("show1 open");
         openCardArray.push($(this));
       setTimeout(checkOpenCards,1000);
     
@@ -96,16 +112,14 @@ if(openCardArray[0][0].firstElementChild.className ==
     matched = matched + 1;
     if (matched === 8) {
         timer.pause();
-        var results = confirm("Congradulation you win the game!" + timer.getTimeValues().toString()+ "\n Do you want to play the game again?");
-        if (results == true) { 
-            location.reload();
-        }
+        afterWinning();
     }
+
     disadled();
     emptyOpenCardArray();
 } else {
-    openCardArray[0].toggleClass("show open");
-    openCardArray[1].toggleClass("show open");
+    openCardArray[0].toggleClass("show1 open");
+    openCardArray[1].toggleClass("show1 open");
     unabled();
     emptyOpenCardArray();
     }

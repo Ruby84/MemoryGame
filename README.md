@@ -1,20 +1,17 @@
 # Memory Game Project
 
-## Table of Contents
+## How to open/run the game locally: 
+1.Please download/clone the repository(https://github.com/Ruby84/MemoryGame) 
+2.open index.html in browser and you can play/run the game.
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
-
-## Instructions
-
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## About the game: 
+1.In order to play the game, first click on random boxes.
+2.Try to memorize the image each time you open each box.
+3.As soon as you open another box the image of previous box will disappear.
+4.Whenever you find the same image that you already saw try to find its pair's       location.
+5.When you match the pair they will remain visible.
+6.Continue to do the same until all images are showing.
+7.After this stage you will receive a congratulation message that will anounce 
+  the amount of times it took to finish this game and it will ask you if you would like to replay it.
+8.There is a counter that records the number of your moves to win the game.
+9.If you choose ok you can replay the game and have more fun!
