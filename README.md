@@ -1,7 +1,7 @@
 # Memory Game Project
 
 ## How to open/run the game locally: 
-1.Please download/clone the repository(https://github.com/Ruby84/MemoryGame) 
+1.Please download/clone the repository[here!](https://github.com/Ruby84/MemoryGame) 
 2.open index.html in browser and you can play/run the game.
 
 ## About the game: 
